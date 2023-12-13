@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title> Protoripo V1</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{url_for('static',filename='js/drag_drop.js')}}"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/drag-drop.css')}}">
+    </head>
+    <body>
+        <!-- Seccion de informacion -->
+        <!-- fin de la seccion  -->
+        <!-- Seccion del dragable -->
+        <section>
+
+            <h3>Arrastra el vido que deseas analizar </h3>
+            <div id="drop-area">
+                <a id="text-drop">Arrastra hasta aqui tu video o haz click para seleccionar  el archivo </a>
+                
+            </div>
+            <table id="Tabla_resultados">
+                <thead>
+                    <th>Emocion</th>
+                    <th>Rango de edad</th>
+                    <th> Genero</th>
+                    <th>Edad</th>
+                </thead>
+                <tbody id="Datos">
+                            
+                </tbody>
+            </table>
+        </section>
+        <!-- Fin de la seccion -->
+        <!-- Seccion de prediccion -->
+        <section>
+            <img src="{{url_for('static',filename='predicciones/Pie_estados.png')}}"/>
+            <img src="{{url_for('static',filename='predicciones/Bar_edades.png')}}"/>
+        </section>
+        <!-- Fin de la seccion -->
+        <!-- Seccion del video -->
+        <source src="{{ url_for('static', filename='video/video_salida.avi') }}" type="video/x-msvideo">
+        <iframe 
+        width="560" 
+        height="315" 
+        src="static/video/video_salida.avi" 
+        frameborder="0" 
+        allowfullscreen
+    ></iframe>
+=        <!-- Fin de la seccion -->
+    </body>
+</html>
