@@ -43,7 +43,6 @@ def Guardar_archivo():
         result=Lectura_archivo()
         print(result)
 
-        # return f'se guardo el archivo {filename} correctamente'
         return result
 
     return None

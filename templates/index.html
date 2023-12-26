@@ -1,49 +1,133 @@
 <html>
     <head>
-        <title> Protoripo V1</title>
+        <title>
+            Proyecto HAR
+        </title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{{url_for('static',filename='js/drag_drop.js')}}"></script>
-        <script src="{{url_for('static',filename='js/tabla.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
+        <script src="{{url_for('static',filename='js/drag_drop.js')}}"></script>
         <link rel="stylesheet" href="{{url_for('static',filename='css/drag-drop.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/style2.css')}}">
     </head>
     <body>
-        <!-- Seccion de informacion -->
-        <!-- fin de la seccion  -->
-        <!-- Seccion del dragable -->
-        <section>
+        <main>
+            <ul class='slider'>
+              <li class='item' style="background-image: url('static/Images/fondo_4.jpg')">
+                <div class='content'>
+                  <h2 class='title'>Formulario de Contacto</h2>
+                  <br>
+                  <form>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre"><br><br>
+                    <label for="apellido">Compañia:</label>
+                    <input type="text" id="Compania" name="Compania"><br><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email"><br><br>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono"><br><br>
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje"></textarea><br><br>
+                    <input type="submit" value="Enviar">
+                  </form>
+                  
+                </div>
+              </li>
+              <li class='item' style="background-image: url('static/Images/Diseno_HAR.jpg')">
+                <div class='content'>
+                  <h2 class='title'>Proyecto HAR</h2>
+                  <p class='description'> Lorem ipsum, dolor sit amet consectetur
+                  adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+                  praesentium nisi. Id laboriosam ipsam enim.  </p>
+                  <button>Read More</button>
+                </div>
+              </li>
+              <li class='item' style="background-image: url('static/Images/fondo_1.jpg')">
+                <div class='content'>
+                  <h2 class='title'>Mision y vision</h2>
+                  <p class='description'> Lorem ipsum, dolor sit amet consectetur
+                  adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+                  praesentium nisi. Id laboriosam ipsam enim.  </p>
+                  <button>Read More</button>
+                </div>
+              </li>
+              <li class='item' style="background-image: url('static/Images/fondo_2.jpg')">
+                <div class='content'>
+                    <h2 class='title'>Protopipo V1</h2>
+                    <br>
+                    <h5>Analizaremos los datos por ti, coloca aqui una grabacion que tengas y generaremos unas predicicones por ti</h5>
+                    <br>
+                    <div id="drop-area">
+                        <a id="text-drop">Arrastra hasta aquí tu video o haz clic para seleccionar el archivo</a>
+                    </div>
+                </div>
+              </li>
+              <li class='item' style="background-image: url('static/Images/fondo_3.jpg')">
+                <div class='content'>
+                  <h2 class='title'>Prediccion</h2>
+                    <table id="Tabla_resultados">
+                        <thead>
+                            <th>Emoción</th>
+                            <th>Rango de edad</th>
+                            <th>Género</th>
+                            <th>Edad</th>
+                        </thead>
+                        <tbody id="Datos"></tbody>
+                        <script>
+                          // inicializarTabla();
+                        </script>
+                    </table>
+                    <button onclick="descargarVideo()">Descargar Video</button>
+                    <script>
+                      function descargarVideo() {
+                        // Ruta del video en la carpeta
+                        var rutaVideo = 'static/video/video_salida.avi'; // Reemplaza esto con la ruta correcta de tu video
+                      
+                        // Crear un enlace de descarga
+                        var enlaceDescarga = document.createElement('a');
+                      
+                        // Establecer la ruta del video como atributo href
+                        enlaceDescarga.href = rutaVideo;
+                      
+                        // Establecer el atributo download para indicar que es un enlace de descarga
+                        enlaceDescarga.download = 'nombre_del_video.mp4'; // Puedes cambiar el nombre del archivo
+                      
+                        // Ocultar el enlace de descarga en el documento
+                        enlaceDescarga.style.display = 'none';
+                      
+                        // Agregar el enlace de descarga al cuerpo del documento
+                        document.body.appendChild(enlaceDescarga);
+                      
+                        // Simular un clic en el enlace de descarga
+                        enlaceDescarga.click();
+                      
+                        // Eliminar el enlace después de la descarga
+                        document.body.removeChild(enlaceDescarga);
+                      }
+                      </script>
+                </div>
+              </li>
+              <li class='item' style="background-image: url('static/Images/fondo_5.jpg')">
+                <div class='content'>
+                  <h2 class='title'>Creado por </h2>
+                  <p class='description'> Lorem ipsum, dolor sit amet consectetur
+                  adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+                  praesentium nisi. Id laboriosam ipsam enim.  </p>
+                  <button>Read More</button>
+                </div>
+              </li>
+            </ul>
+            <nav class='nav'>
+              <ion-icon class='btn prev' name="arrow-back-outline"></ion-icon>
+              <ion-icon class='btn next' name="arrow-forward-outline"></ion-icon>
+            </nav>
+          </main>
+          
+          <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+          <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+          <script src="{{url_for('static',filename='js/tabla2.js')}}"></script>
 
-            <h3>Arrastra el vido que deseas analizar </h3>
-            <div id="drop-area">
-                <a id="text-drop">Arrastra hasta aqui tu video o haz click para seleccionar  el archivo </a>
-                
-            </div>
-            <table id="Tabla_resultados">
-                <thead>
-                    <th>Emocion</th>
-                    <th>Rango de edad</th>
-                    <th> Genero</th>
-                    <th>Edad</th>
-                </thead>
-                <tbody id="Datos">
-                            
-                </tbody>
-            </table>
-        </section>
-        <!-- Fin de la seccion -->
-        <!-- Seccion de prediccion -->
-        <section>
-            
-        </section>
-        <!-- Fin de la seccion -->
-        <!-- Seccion del video -->
-        <!-- <source src="{{ url_for('static', filename='video/video_salida.avi') }}" type="video/x-msvideo"> -->
-        <!-- <iframe 
-        width="560" 
-        height="315" 
-        src="static/video/video_salida.avi" 
-        frameborder="0" 
-        allowfullscreen
-    ></iframe> -->
+
     </body>
 </html>

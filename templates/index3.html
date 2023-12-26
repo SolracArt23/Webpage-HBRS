@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo V1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{url_for('static',filename='js/drag_drop.js')}}"></script>
+    <script src="{{url_for('static',filename='js/tabla.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/drag-drop.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <!-- Seccion de bienvenida -->
+    <section>
+        <img src="{{url_for('static',filename='predicciones/Diseno_HAR.jpg')}}">
+    </section>
+    <!-- Seccion de informacion -->
+    <section>
+        <h1>Esto es la sección de información del proyecto</h1>
+    </section>
+    <!-- Seccion del dragable -->
+    <section>
+        <h3>Arrastra el video que deseas analizar</h3>
+        <div id="drop-area">
+            <a id="text-drop">Arrastra hasta aquí tu video o haz clic para seleccionar el archivo</a>
+        </div>
+
+    </section>
+    <!-- Seccion de prediccion -->
+    <section>
+        <table id="Tabla_resultados">
+            <thead>
+                <th>Emoción</th>
+                <th>Rango de edad</th>
+                <th>Género</th>
+                <th>Edad</th>
+            </thead>
+            <tbody id="Datos"></tbody>
+        </table>
+        <input type="submit" id="Descarga" value="Descargar Grabacion">
+    </section>
+    <!-- Seccion del video -->
+    <!-- <source src="{{ url_for('static', filename='video/video_salida.avi') }}" type="video/x-msvideo"> -->
+    <!-- <iframe 
+    width="560" 
+    height="315" 
+    src="static/video/video_salida.avi" 
+    frameborder="0" 
+    allowfullscreen
+></iframe> -->
+
+
+
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tabla paginada</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .pagination {
+      display: inline-block;
+    }
+    .pagination a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+    }
+    .pagination a.active {
+      background-color: dodgerblue;
+      color: white;
+    }
+    .pagination a:hover:not(.active) {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<table id="Tabla_resultados">
+  <thead>
+    <tr>
+      <th>Emoción</th>
+      <th>Rango de edad</th>
+      <th>Género</th>
+      <th>Edad</th>
+    </tr>
+  </thead>
+  <tbody id="Datos"></tbody>
+</table>
+
+
+</body>
+</html>
