@@ -6,6 +6,9 @@ import boto3
 from PIL import Image
 from Analisis import analisis,recostruccion_video
 
+#Cargue de claves
+from dotenv import load_dotenv
+
 
 def Lectura_archivo():
     for general,_,files in os.walk('Grabaciones'):
@@ -157,10 +160,17 @@ def view_video(source):
     #Predecir
     response=Send_AWS()
     print(f"Respuesta de process: {response}")
+
+    #Simulacion
+    # response=Send_AWS_simulacion()
     recostruccion_video()
 
     return response
 
+
+def Send_AWS_simulacion():
+    Respuesta =[[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']]]
+    return  Respuesta
 
 def Send_AWS():
     lista_image = [image  for _,_,images in os.walk('Images') for image in images]
@@ -171,8 +181,11 @@ def Send_AWS():
     lista_image = [lista_image[x]  for x in prediccion]
     print(lista_image)
 
-    access_key_id = 'AKIASQESV34ODH544LOG'
-    secret_access_key = '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'
+    load_dotenv()
+    access_key_id = os.getenv('ACCESS_KEY')
+    secret_access_key =os.getenv('SECRET_KEY')   
+    # access_key_id = 'AKIASQESV34ODH544LOG'
+    # secret_access_key = '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'
     dataset=[]
     client = boto3.client('rekognition',
                         aws_access_key_id=access_key_id,
@@ -196,7 +209,6 @@ def Send_AWS():
         #mostrar resultados
         try:
             numero_personas,emocion,rango_edades,genero,seccion_edades = Extract_information.Main(response)
-            dataset +=[[numero_personas,emocion,rango_edades,genero,seccion_edades]]
             # Desempaqueta las emociones
             emocion_nombre = []
             emocion_confianza = []
@@ -213,6 +225,8 @@ def Send_AWS():
                     genero_nombre += [key]
                     genero_confianza += [value]
                     break  
+
+            dataset +=[[numero_personas,emocion_nombre,rango_edades,genero_nombre,seccion_edades]]
         except:
             print("no se encontro cara")    
 
@@ -222,13 +236,3 @@ def Send_AWS():
     return dataset
 
     #Seccion de recostruccion del video
-
-
-
-
-
-# Lectura_archivo()
-# view_video('Grabaciones/rec-screen (33).webm')
-# view_video('Grabaciones/rec-screen_22.webm')
-# view_video('Grabaciones/recording (1).mkv')
-# Send_AWS()

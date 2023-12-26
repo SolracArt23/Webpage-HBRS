@@ -29,14 +29,18 @@ $(document).ready(function(){
                 body:formData
             }).then(response => response.text())
             .then( data =>{
-                console.log(data);
                 document.getElementById('text-drop').textContent = "Se leyo el documento correctamente";
 
-                //Procesar los datos 
-                ///////
-                ////
 
+                //Crear la tabla de respuesta
+                console.log(data)
+                const array = JSON.parse(data)
                 
+                for (const [rango,emocion, rangoEdad, genero, edad] of array) {
+                insertarDatos(emocion, rangoEdad, genero, edad);
+                }
+                  
+
             }).catch(error =>{
                 console.log('Error',error)
             })
@@ -62,3 +66,18 @@ $(document).ready(function(){
     
 
 })
+
+function insertarDatos(emocion, rangoEdad, genero, edad) {
+    const tabla = document.getElementById("Tabla_resultados");
+    const fila = tabla.insertRow();
+    const celdaEmocion = fila.insertCell();
+    const celdaRangoEdad = fila.insertCell();
+    const celdaGenero = fila.insertCell();
+    const celdaEdad = fila.insertCell();
+    celdaEmocion.innerHTML = emocion;
+    celdaRangoEdad.innerHTML = rangoEdad[0];
+    celdaGenero.innerHTML = genero;
+    celdaEdad.innerHTML = edad;
+  }
+  
+
