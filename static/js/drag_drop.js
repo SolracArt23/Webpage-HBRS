@@ -51,6 +51,7 @@ $(document).ready(function(){
                     "lengthChange": false,
                     "data": array, // Agrega tus datos aquí
                     "columns": [
+                    {"title": "Cantidad de personas"},
                     { "title": "Emoción" },
                     { "title": "Rango de edad" },
                     { "title": "Género" },

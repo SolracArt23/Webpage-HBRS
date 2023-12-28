@@ -1,20 +1,30 @@
-from flask import Flask,render_template,Response,url_for,request
+from flask import Flask,render_template,Response,url_for,request,jsonify
 from werkzeug.utils import secure_filename
 import os
 import threading
 from process import Lectura_archivo
+import MySQLdb
 #Creacion de backend
 app = Flask(__name__)
+# db = MySQLdb.connect(host='bydeylrhwrudhbj5hdcf-mysql.services.clever-cloud.com',user='uhrl7ap9vhtyrlt1',password='v3YUJacwoyGiiuabmO9x',port=3306,database='hbrs_from')
+
 #configurar la carpeta de gravaciones
 app.config['Grabaciones'] = 'Grabaciones'
-# app.config['video'] = 'video'
-
 
 
 @app.route('/')
 def MainPage():
     print(url_for('static', filename='video/video_salida.mp4'))
     return render_template('index.html')
+
+#Formulario
+@app.route('/from',methods=['POST'])
+def Formulario():
+    print(request.form.nombre)
+    # cursor = db.cursor()
+ 
+
+
 
 # Funcion de subida de archivos
 @app.route('/Guardar_archivo',methods=['POST'])

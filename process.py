@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import boto3
 from PIL import Image
 from Analisis import analisis,recostruccion_video
+from comparador import Comparar
 
 #Cargue de claves
 from dotenv import load_dotenv
@@ -117,49 +118,43 @@ def view_video(source):
     #Seccion del video
     captura = cv2.VideoCapture(source)
     video = []
+    contador=0
     while (captura.isOpened()):
+
         ret, imagen = captura.read()
         if ret == True:
             #Redimencionar imagen
             imagen = cv2.resize(imagen,(500,500))
             #detectar las caras
             frame,bboxs,ids=faceBox(faceNet,imagen,0.6)
-            for bbox in bboxs:
-                face = frame[max(0,bbox[1]-padding):min(bbox[3]+padding,frame.shape[0]-1),max(0,bbox[0]-padding):min(bbox[2]+padding, frame.shape[1]-1)]
-                video +=[np.array(face)]
 
-                try:
-                    # cv2.imshow('cara', face)
-                    pass
-                except:pass
+            if contador ==3:
+                for bbox in bboxs:
+                    face = frame[max(0,bbox[1]-padding):min(bbox[3]+padding,frame.shape[0]-1),max(0,bbox[0]-padding):min(bbox[2]+padding, frame.shape[1]-1)]
+                    video +=[np.array(face)]
+
+                contador = 0
+                    
             cv2.imshow('video', imagen)
             
             if cv2.waitKey(30) == ord('s'): #or len(video) >=50:
                 break
+
         else: break
+        contador +=1
+
     captura.release()
     cv2.destroyAllWindows()
 
-    # Iterar sobre todas las imágenes en 'video'
-    for x in range(len(video)):
-        # Verificar si la imagen en la posición 'x' no ha sido marcada para eliminación (es decir, no es 0)
-        if video[x] is not None:
-            # Iterar sobre todas las demás imágenes en 'video'
-            for y in range(x + 1, len(video)):
-    
-                # Verificar si las imágenes son iguales y no han sido marcadas para eliminación
-                if video[x] is not None and np.array_equal(video[x], video[y]):
-                    # Marcar la imagen en la posición 'y' para eliminación
-                    video[y] = None
-
-    # Filtrar las imágenes marcadas para eliminación (es decir, las que ahora son None)
-    video = [imagen for imagen in video if imagen is not None]
     for x in range(len(video)):        
         Save_img(video[x],x)
     
+    #Comparar imagenes
+    Comparar()
+    
     #Predecir
     response=Send_AWS()
-    print(f"Respuesta de process: {response}")
+    # print(f"Respuesta de process: {response}")
 
     #Simulacion
     # response=Send_AWS_simulacion()
@@ -172,20 +167,21 @@ def Send_AWS_simulacion():
     Respuesta =[[2, ['CALM'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Female'], ['(40-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']],[1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']], [1, ['SURPRISED'], [(18, 22)], ['Male'], ['(20-32)']]]
     return  Respuesta
 
+
+
+
 def Send_AWS():
     lista_image = [image  for _,_,images in os.walk('Images') for image in images]
     print(len(lista_image))
-    # lista_image = lista_image[:3]
-    prediccion=np.random.randint(len(lista_image),size=20)
-    # numeros_unicos = np.random.choice(np.arange(1, len(lista_image)), size=20,replace=False)
-    lista_image = [lista_image[x]  for x in prediccion]
-    print(lista_image)
+    
+    # prediccion=np.random.randint(len(lista_image),size=20)
+    # lista_image = [lista_image[x]  for x in prediccion]
+    # print(lista_image)
 
     load_dotenv()
     access_key_id = os.getenv('ACCESS_KEY')
     secret_access_key =os.getenv('SECRET_KEY')   
-    # access_key_id = 'AKIASQESV34ODH544LOG'
-    # secret_access_key = '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'
+
     dataset=[]
     client = boto3.client('rekognition',
                         aws_access_key_id=access_key_id,

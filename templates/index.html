@@ -18,7 +18,7 @@
                 <div class='content'>
                   <h2 class='title'>Formulario de Contacto</h2>
                   <br>
-                  <form>
+                  <form id="Formulario">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre"><br><br>
                     <label for="apellido">Compañia:</label>
@@ -27,11 +27,23 @@
                     <input type="email" id="email" name="email"><br><br>
                     <label for="telefono">Teléfono:</label>
                     <input type="tel" id="telefono" name="telefono"><br><br>
-                    <label for="mensaje">Mensaje:</label>
-                    <textarea id="mensaje" name="mensaje"></textarea><br><br>
                     <input type="submit" value="Enviar">
                   </form>
-                  
+                  <script>
+                    document.getElementById('Fomulario').addEventListener('submit',function (event) {
+                      event.preventDefault();
+
+                      var fromData = new FromData(event.target);
+
+                      fetch('/from',{
+                        method:'POST',
+                        body:fromData
+
+                      }).then(data=>{
+                        alert('Se ha subido el formulario');
+                      })
+                    })
+                  </script>
                 </div>
               </li>
               <li class='item' style="background-image: url('static/Images/Diseno_HAR.jpg')">
@@ -68,6 +80,7 @@
                   <h2 class='title'>Prediccion</h2>
                     <table id="Tabla_resultados">
                         <thead>
+                            <th>Rango</th>
                             <th>Emoción</th>
                             <th>Rango de edad</th>
                             <th>Género</th>
